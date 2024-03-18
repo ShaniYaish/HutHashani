@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "48918348362",
+    "project_id": "huthashani-6179c",
+    "storage_bucket": "huthashani-6179c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48918348362:android:27a79fd59faab444041cb3",
+        "android_client_info": {
+          "package_name": "com.idz.huthashani"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfkT7TJIguXeT2AQ5Hxmbj1CNlT8LEvjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
