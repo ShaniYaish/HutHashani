@@ -19,10 +19,10 @@ import android.provider.MediaStore
 import com.google.firebase.auth.AuthResult
 
 class FirebaseModel {
-    var db: FirebaseFirestore
-    var storage: FirebaseStorage
-    var mAuth: FirebaseAuth
-    var mUser: FirebaseUser?
+    private var db: FirebaseFirestore
+    private var storage: FirebaseStorage
+    private var mAuth: FirebaseAuth
+    private var mUser: FirebaseUser?
 
     init {
         db = FirebaseFirestore.getInstance()
@@ -60,7 +60,7 @@ class FirebaseModel {
             }
     }
 
-    fun getImageUri(inContext: Context, inImage: Bitmap?, fileName: String?): Uri? {
+    private fun getImageUri(inContext: Context, inImage: Bitmap?, fileName: String?): Uri? {
         if (inImage == null) return null
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)

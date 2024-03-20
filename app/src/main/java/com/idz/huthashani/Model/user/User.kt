@@ -15,10 +15,10 @@ class User {
 
     constructor()
 
-    constructor(email: String?, password: String?, name: String?) {
+    constructor(email: String?, password: String?, fullName: String?) {
         this.email = email
         this.password = password
-        this.fullName = name
+        this.fullName = fullName
     }
 
     constructor(email: String?, password: String?) {
@@ -33,11 +33,11 @@ class User {
         this.imageAvatar = imageAvatar
     }
 
-    constructor(id: String, email: String?, password: String?, name: String?, imageAvatar: String?) {
+    constructor(id: String, email: String?, password: String?, fullName: String?, imageAvatar: String?) {
         this.id = id
         this.email = email
         this.password = password
-        this.fullName = name
+        this.fullName = fullName
         this.imageAvatar = imageAvatar
     }
 

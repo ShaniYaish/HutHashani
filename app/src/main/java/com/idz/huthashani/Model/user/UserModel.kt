@@ -2,43 +2,16 @@ package com.idz.huthashani.Model.user
 
 
 import android.graphics.Bitmap
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.idz.huthashani.Model.firebase.FirebaseModel
 
 
 class UserModel private constructor() {
-    private val firebaseModel: FirebaseModel? = FirebaseModel()
+    private val firebaseModel: FirebaseModel = FirebaseModel()
 
     fun interface Listener<T> {
         fun onComplete(data: T)
-    }
-
-    enum class LoadingState {
-        LOADING,
-        NOT_LOADING
-    }
-
-    val EventUsersListLoadingState: MutableLiveData<LoadingState> = MutableLiveData<LoadingState>(
-        LoadingState.NOT_LOADING
-    )
-
-    fun registerUser(user: User?, listener: Listener<Task<AuthResult>>? = null) {
-        if (user != null) {
-            firebaseModel?.registerUser(user) { task: Task<AuthResult> ->
-                listener?.onComplete(task)
-            }
-        }
-    }
-    fun loginUser(user: User?, listener: Listener<Task<AuthResult>>) {
-        if (user != null) {
-            firebaseModel?.loginUser(
-                user
-            ) { task: Task<AuthResult> ->
-                listener.onComplete(task)
-            }
-        }
     }
 
     companion object {
@@ -48,13 +21,33 @@ class UserModel private constructor() {
         }
     }
 
+
+    fun registerUser(user: User?, listener: Listener<Task<AuthResult>>? = null) {
+        if (user != null) {
+            firebaseModel.registerUser(user) { task: Task<AuthResult> ->
+                listener?.onComplete(task)
+            }
+        }
+    }
+    fun loginUser(user: User?, listener: Listener<Task<AuthResult>>) {
+        if (user != null) {
+            firebaseModel.loginUser(
+                user
+            ) { task: Task<AuthResult> ->
+                listener.onComplete(task)
+            }
+        }
+    }
+
+
+
     fun isUserLoggedIn(): Boolean {
-        return firebaseModel!!.isUserLoggedIn()
+        return firebaseModel.isUserLoggedIn()
     }
 
     fun updateUserProfile(user: User?, bitmap: Bitmap?, listener: Listener<Task<Void?>?>) {
         if (user != null) {
-            firebaseModel?.updateUserProfile(user, bitmap) { task ->
+            firebaseModel.updateUserProfile(user, bitmap) { task ->
                 listener.onComplete(
                     task
                 )
@@ -63,14 +56,7 @@ class UserModel private constructor() {
     }
 
     fun logout() {
-        firebaseModel!!.logout()
+        firebaseModel.logout()
     }
 
-    /*fun getUserId(): String? {
-        return firebaseModel!!.getUserId()
-    }
-
-    fun getUserProfileDetails(): User? {
-        return firebaseModel!!.getUserProfileDetails()
-    }*/
 }
