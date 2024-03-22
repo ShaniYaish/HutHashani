@@ -22,11 +22,11 @@ class UserModel private constructor() {
     }
 
 
-    fun registerUser(user: User?, listener: Listener<Task<AuthResult>>? = null) {
+    fun registerUser(user: User?, listener: Listener<Task<Void?>?>) {
         if (user != null) {
-            firebaseModel.registerUser(user) { task: Task<AuthResult> ->
-                listener?.onComplete(task)
-            }
+            firebaseModel.registerUser(
+                user
+            ) { task: Task<Void?>? -> run { listener.onComplete(task) } }
         }
     }
     fun loginUser(user: User?, listener: Listener<Task<AuthResult>>) {
@@ -39,11 +39,6 @@ class UserModel private constructor() {
         }
     }
 
-
-
-    fun isUserLoggedIn(): Boolean {
-        return firebaseModel.isUserLoggedIn()
-    }
 
     fun updateUserProfile(user: User?, bitmap: Bitmap?, listener: Listener<Task<Void?>?>) {
         if (user != null) {

@@ -80,7 +80,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registerUser(user: User) {
         UserModel.instance().registerUser(user) { task ->
-            if (task.isSuccessful) {
+            if (task!!.isSuccessful) {
                 sendUserToNextActivity()
                 progressDialog?.dismiss()
                 Toast.makeText(this@RegisterActivity, "Registration Successful", Toast.LENGTH_SHORT).show()

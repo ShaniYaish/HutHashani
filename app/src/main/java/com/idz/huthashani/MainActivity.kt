@@ -13,18 +13,18 @@ import com.idz.huthashani.Model.firebase.FirebaseModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mAuth: FirebaseAuth
+    private lateinit var fireBaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mAuth = FirebaseAuth.getInstance()
+        fireBaseAuth = FirebaseAuth.getInstance()
 
         supportActionBar?.hide()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val user = mAuth.currentUser
+            val user = fireBaseAuth.currentUser
             Log.i("TAG" , user.toString())
             if( user != null){
                 val intent = Intent(this, HomeActivity::class.java)
