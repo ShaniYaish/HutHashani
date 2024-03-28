@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".base.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,6 +16,9 @@
         android:theme="@style/Theme.HutHashani"
         tools:targetApi="31">
         <activity
+            android:name=".login.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
 
@@ -25,8 +27,8 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".RegisterActivity"
-            android:exported="true"></activity>
+            android:name=".register.RegisterActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

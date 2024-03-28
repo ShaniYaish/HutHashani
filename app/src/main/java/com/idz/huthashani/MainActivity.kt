@@ -1,14 +1,13 @@
 package com.idz.huthashani
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-
 import com.google.firebase.auth.FirebaseAuth
-import com.idz.huthashani.Model.firebase.FirebaseModel
+import com.idz.huthashani.login.LoginActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,17 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             val user = fireBaseAuth.currentUser
-            Log.i("TAG" , user.toString())
             if( user != null){
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }else{
-                val intent = Intent(this, RegisterActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-        },3000)
+        },5000)
 
     }
 }

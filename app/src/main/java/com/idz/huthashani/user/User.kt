@@ -1,4 +1,4 @@
-package com.idz.huthashani.Model.user
+package com.idz.huthashani.user
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,10 +10,8 @@ class User {
     var id: String = ""
     var email: String? = ""
     var password: String? = ""
-    var fullName: String? = ""
-    var imageAvatar: String? = ""
-
-    constructor()
+    private var fullName: String? = ""
+    private var imageAvatar: String? = ""
 
     constructor(email: String?, password: String?, fullName: String?) {
         this.email = email

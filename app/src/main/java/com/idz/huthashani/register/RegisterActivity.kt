@@ -1,5 +1,5 @@
+package com.idz.huthashani.register
 
-package com.idz.huthashani
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import com.idz.huthashani.Model.user.User
-import com.idz.huthashani.Model.user.UserModel
+import com.idz.huthashani.user.User
 import android.widget.Toast
 import android.os.Handler
-
+import com.idz.huthashani.HomeActivity
+import com.idz.huthashani.firebase.FirebaseModel
+import com.idz.huthashani.login.LoginActivity
+import com.idz.huthashani.R
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -29,7 +31,7 @@ class RegisterActivity : AppCompatActivity() {
         progressDialog?.dismiss()
     }
     private val delayDuration = 5000L
-
+    private val firebaseModel: FirebaseModel = FirebaseModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +43,14 @@ class RegisterActivity : AppCompatActivity() {
         initializeViews()
 
         btnRegister!!.setOnClickListener { performAuth() }
+        alreadyHaveAccount!!.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@RegisterActivity,
+                    LoginActivity::class.java
+                )
+            )
+        }
     }
 
     private fun initializeViews() {
@@ -74,19 +84,21 @@ class RegisterActivity : AppCompatActivity() {
             inputConfirmPassword?.requestFocus()
         } else {
             showProgressDialogWithDelay()
-            registerUser(User(email ,password,fullName))
+            registerUser(User(email,password,fullName))
         }
     }
 
     private fun registerUser(user: User) {
-        UserModel.instance().registerUser(user) { task ->
-            if (task!!.isSuccessful) {
+        firebaseModel.registerUser(user) { registrationTask ->
+            if (registrationTask.isSuccessful) {
+                // Registration successful
                 sendUserToNextActivity()
                 progressDialog?.dismiss()
                 Toast.makeText(this@RegisterActivity, "Registration Successful", Toast.LENGTH_SHORT).show()
             } else {
+                // Registration failed
                 progressDialog?.dismiss()
-                val errorMessage = task.exception?.message ?: "Unknown error occurred"
+                val errorMessage = registrationTask.exception?.message ?: "Unknown error occurred"
                 Toast.makeText(this@RegisterActivity, errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
