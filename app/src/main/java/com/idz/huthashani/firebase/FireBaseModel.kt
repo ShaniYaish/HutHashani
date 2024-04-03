@@ -12,20 +12,18 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
 import com.idz.huthashani.login.UserLogin
 import com.idz.huthashani.register.UserRegister
-import java.util.UUID
 
 class FirebaseModel {
     private val _registerResult = MutableLiveData<String>()
     val registerResult: LiveData<String> get() = _registerResult
 
 
-    private var db: FirebaseFirestore
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var storage: FirebaseStorage
     private var firebaseAuth: FirebaseAuth
     private var firebaseUser: FirebaseUser?
 
     init {
-        db = FirebaseFirestore.getInstance()
         val settings: FirebaseFirestoreSettings = FirebaseFirestoreSettings.Builder()
             .setPersistenceEnabled(true)
             .build()

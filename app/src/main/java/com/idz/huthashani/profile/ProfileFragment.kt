@@ -17,8 +17,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.idz.huthashani.R
+import com.bumptech.glide.Glide
 
 
 class ProfileFragment : Fragment() {
@@ -42,6 +43,9 @@ class ProfileFragment : Fragment() {
         if (view != null) {
             initializeViews(view)
         }
+
+        // Load user profile image if available
+        loadProfileImage()
 
         return view
     }
@@ -75,6 +79,24 @@ class ProfileFragment : Fragment() {
             // Call ViewModel function to update profile
             viewModel.changeUserName(userProfile, name)
             viewModel.uploadProfileImage(userProfile, selectedImageUri)
+        }
+    }
+
+
+    private fun loadProfileImage() {
+        val storageRef = FirebaseStorage.getInstance().reference
+        val profileImageRef = storageRef.child("profile_images/${currentUser.email}")
+
+        profileImageRef.downloadUrl.addOnSuccessListener { uri ->
+            // Load image using Glide or any other image loading library
+            Glide.with(requireContext())
+                .load(uri)
+                .placeholder(R.drawable.default_avatar) // Placeholder in case image loading fails
+                .error(R.drawable.default_avatar) // Placeholder in case of error
+                .into(profileImage)
+        }.addOnFailureListener {
+            // Handle failure to load image
+            profileImage.setImageResource(R.drawable.default_avatar)
         }
     }
 

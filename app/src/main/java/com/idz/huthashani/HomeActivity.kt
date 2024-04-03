@@ -14,7 +14,7 @@ import com.idz.huthashani.firebase.FirebaseModel
 import com.idz.huthashani.login.LoginActivity
 
 class HomeActivity : AppCompatActivity() {
-    var navController: NavController? = null
+    private var navController: NavController? = null
     private val firebaseModel: FirebaseModel = FirebaseModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    var fragmentMenuId = 0
+    private var fragmentMenuId = 0
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         if (fragmentMenuId != 0) {
