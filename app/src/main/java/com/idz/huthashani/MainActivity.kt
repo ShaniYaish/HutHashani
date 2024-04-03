@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             val user = fireBaseAuth.currentUser
             if( user != null){
-                val intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, NavActivity::class.java)
                 startActivity(intent)
                 finish()
             }else{

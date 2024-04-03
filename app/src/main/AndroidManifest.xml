@@ -22,7 +22,7 @@
             android:name=".login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".NavActivity"
             android:exported="false" />
 
         <meta-data

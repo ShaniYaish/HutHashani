@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.idz.huthashani.HomeActivity
+import com.idz.huthashani.NavActivity
 import com.idz.huthashani.firebase.FirebaseModel
 import com.idz.huthashani.R
 import com.idz.huthashani.register.RegisterActivity
@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendUserToNextActivity() {
-        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+        val intent = Intent(this@LoginActivity, NavActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }

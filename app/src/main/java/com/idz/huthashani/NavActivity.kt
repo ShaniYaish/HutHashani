@@ -13,13 +13,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.idz.huthashani.firebase.FirebaseModel
 import com.idz.huthashani.login.LoginActivity
 
-class HomeActivity : AppCompatActivity() {
+class NavActivity : AppCompatActivity() {
     private var navController: NavController? = null
     private val firebaseModel: FirebaseModel = FirebaseModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_nav)
 
         val navHostFragment: NavHostFragment? =
             supportFragmentManager.findFragmentById(R.id.navhost) as NavHostFragment?
@@ -60,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun sendUserToNextActivity(clazz: Class<*>) {
-        val intent = Intent(this@HomeActivity, clazz)
+        val intent = Intent(this@NavActivity, clazz)
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
