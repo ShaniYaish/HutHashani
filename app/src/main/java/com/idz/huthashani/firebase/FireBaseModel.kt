@@ -7,14 +7,18 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.idz.huthashani.user.User
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthResult
+import com.idz.huthashani.login.UserLogin
+import com.idz.huthashani.register.UserRegister
+import java.util.UUID
 
 class FirebaseModel {
     private val _registerResult = MutableLiveData<String>()
     val registerResult: LiveData<String> get() = _registerResult
+
+
     private var db: FirebaseFirestore
     private var storage: FirebaseStorage
     private var firebaseAuth: FirebaseAuth
@@ -31,33 +35,43 @@ class FirebaseModel {
         firebaseUser = firebaseAuth.currentUser
     }
 
-    fun registerUser(user: User, listener: (Task<AuthResult?>) -> Unit) {
-        firebaseAuth.createUserWithEmailAndPassword(user.email.toString(), user.password.toString())
+    fun registerUser(userLogin: UserLogin, userRegister: UserRegister, listener: (Task<AuthResult?>) -> Unit) {
+        firebaseAuth.createUserWithEmailAndPassword(userLogin.email.toString(), userLogin.password.toString())
             .addOnCompleteListener { registrationTask ->
                 if (registrationTask.isSuccessful) {
-                    val userId = registrationTask.result?.user?.uid
-                    if (userId != null) {
-                        db.collection("Users").document(user.email.toString())
-                            .set(user)
-                            .addOnSuccessListener {
-                                _registerResult.value = "Success"
-                            }
-                            .addOnFailureListener {
-                                _registerResult.value = "Cannot upload user"
-                            }
-                    }
+                    val userId = firebaseAuth.currentUser!!.uid
+                    val user = returnUserAsMap(userId,userRegister)
+
+                    db.collection("Users").document(userId)
+                        .set(user)
+                        .addOnSuccessListener {
+                            _registerResult.value = "Success"
+                        }
+                        .addOnFailureListener {
+                            _registerResult.value = "Cannot create user"
+                        }
                     listener(registrationTask)
                 } else {
                     // Notify listener of failure if user registration failed
+                    _registerResult.value = "The email is already in use"
                     listener(registrationTask)
                 }
             }
     }
 
 
+    private fun returnUserAsMap(userId:String , userRegister: UserRegister): Map<String, Any> {
+        val user = HashMap<String, Any>()
+        user["fullName"] = userRegister.fullName ?: ""
+        user["userId"] = userId
+        return user
+    }
 
-    fun loginUser(user: User, listener: (Task<AuthResult?>) -> Unit) {
-        firebaseAuth.signInWithEmailAndPassword(user.email.toString(), user.password.toString())
+
+
+
+    fun loginUser(userLogin: UserLogin, listener: (Task<AuthResult?>) -> Unit) {
+        firebaseAuth.signInWithEmailAndPassword(userLogin.email.toString(), userLogin.password.toString())
             .addOnCompleteListener { task ->
                 firebaseUser = firebaseAuth.currentUser
                 listener(task)

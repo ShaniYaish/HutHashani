@@ -8,16 +8,19 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import com.idz.huthashani.user.User
 import android.widget.Toast
 import android.os.Handler
 import com.idz.huthashani.HomeActivity
 import com.idz.huthashani.firebase.FirebaseModel
 import com.idz.huthashani.login.LoginActivity
 import com.idz.huthashani.R
+import com.idz.huthashani.login.UserLogin
 
 
 class RegisterActivity : AppCompatActivity() {
+
+    private val firebaseModel: FirebaseModel = FirebaseModel()
+
     private var inputEmail: EditText? = null
     private var inputFullName: EditText? = null
     private var inputPassword: EditText? = null
@@ -31,7 +34,6 @@ class RegisterActivity : AppCompatActivity() {
         progressDialog?.dismiss()
     }
     private val delayDuration = 5000L
-    private val firebaseModel: FirebaseModel = FirebaseModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,7 @@ class RegisterActivity : AppCompatActivity() {
         initializeViews()
 
         btnRegister!!.setOnClickListener { performAuth() }
+
         alreadyHaveAccount!!.setOnClickListener {
             startActivity(
                 Intent(
@@ -84,12 +87,12 @@ class RegisterActivity : AppCompatActivity() {
             inputConfirmPassword?.requestFocus()
         } else {
             showProgressDialogWithDelay()
-            registerUser(User(email,password,fullName))
+            registerUser(UserLogin(email,password) , UserRegister(fullName))
         }
     }
 
-    private fun registerUser(user: User) {
-        firebaseModel.registerUser(user) { registrationTask ->
+    private fun registerUser(userLogin: UserLogin ,userRegister: UserRegister ) {
+        firebaseModel.registerUser(userLogin, userRegister) { registrationTask ->
             if (registrationTask.isSuccessful) {
                 // Registration successful
                 sendUserToNextActivity()

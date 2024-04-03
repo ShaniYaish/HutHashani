@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.idz.huthashani.HomeActivity
 import com.idz.huthashani.firebase.FirebaseModel
-import com.idz.huthashani.user.User
 import com.idz.huthashani.R
 import com.idz.huthashani.register.RegisterActivity
 
@@ -70,12 +69,12 @@ class LoginActivity : AppCompatActivity() {
             inputPassword?.requestFocus()
         } else {
             showProgressDialogWithDelay()
-            loginUser(User(email, password))
+            loginUser(UserLogin(email, password))
         }
     }
 
-    private fun loginUser(user: User) {
-        firebaseModel.loginUser(user) { task ->
+    private fun loginUser(userLogin: UserLogin) {
+        firebaseModel.loginUser(userLogin) { task ->
             if (task.isSuccessful) {
                 sendUserToNextActivity()
                 progressDialog?.dismiss()
