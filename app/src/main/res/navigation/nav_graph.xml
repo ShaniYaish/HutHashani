@@ -20,6 +20,21 @@
         <action
             android:id="@+id/action_homeFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_restaurantsFragment2"
+            app:destination="@id/restaurantsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recommendationFragment"
+            app:destination="@id/recommendationFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/restaurantsFragment"
+        android:name="com.idz.huthashani.restaurants.RestaurantsFragment"
+        android:label="RestaurantsFragment" />
+    <fragment
+        android:id="@+id/recommendationFragment"
+        android:name="com.idz.huthashani.recommendation.RecommendationFragment"
+        android:label="RecommendationFragment" />
 
 </navigation>

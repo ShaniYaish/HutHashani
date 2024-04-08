@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">HutHashani</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="home_fragment_title">עמוד הבית</string>
+    <string name="restaurants_fragment_title">מסעדות</string>
+    <string name="recommendation_fragment_title">המלצה</string>
+    <string name="user_profile_fragment_title">פרופיל</string>
+
 </resources>

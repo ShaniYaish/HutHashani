@@ -3,13 +3,23 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@android:drawable/btn_star"
-        android:title="Home" />
+        android:icon="@drawable/home"
+        android:title="@string/home_fragment_title" />
+
+    <item
+        android:id="@+id/restaurantsFragment"
+        android:icon="@drawable/restaurants"
+        android:title="@string/restaurants_fragment_title" />
+
+    <item
+        android:id="@+id/recommendationFragment"
+        android:icon="@drawable/recommendation"
+        android:title="@string/recommendation_fragment_title" />
 
     <item
         android:id="@+id/userProfileFragment"
-        android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="My Profile" />
-
+        android:icon="@drawable/profile"
+        android:title="@string/user_profile_fragment_title" />
 
 </menu>
+
