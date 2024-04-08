@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.idz.huthashani.NavActivity
@@ -20,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private var createNewAccount: TextView? = null
     private var inputEmail: EditText? = null
     private var inputPassword: EditText? = null
-    private var btnLogin: Button? = null
+    private var btnLogin: LinearLayout? = null
     private var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     private var progressDialog: ProgressDialog? = null
     private val progressDialogDelayHandler = Handler()
@@ -52,9 +53,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initializeViews() {
         createNewAccount = findViewById(R.id.createNewAccount)
-        inputEmail = findViewById(R.id.inputEmail)
-        inputPassword = findViewById(R.id.inputPassword)
-        btnLogin = findViewById(R.id.btnLogin)
+        inputEmail = findViewById(R.id.inputEmailET)
+        inputPassword = findViewById(R.id.inputPasswordET)
+        btnLogin = findViewById(R.id.btnLoginLL)
         progressDialog = ProgressDialog(this)
     }
 
