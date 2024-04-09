@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import android.os.Handler
+import android.widget.LinearLayout
 import com.idz.huthashani.NavActivity
 import com.idz.huthashani.firebase.FirebaseModel
 import com.idz.huthashani.login.LoginActivity
@@ -25,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     private var inputFullName: EditText? = null
     private var inputPassword: EditText? = null
     private var inputConfirmPassword: EditText? = null
-    private var btnRegister: Button? = null
+    private var btnRegister: LinearLayout? = null
     private var alreadyHaveAccount: TextView? = null
     private var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     private var progressDialog: ProgressDialog? = null
@@ -57,12 +58,12 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
-        alreadyHaveAccount = findViewById(R.id.alreadyHaveAccount)
-        inputEmail = findViewById(R.id.inputEmail)
-        inputFullName = findViewById(R.id.inputFullName)
-        inputPassword = findViewById(R.id.inputPassword)
-        inputConfirmPassword = findViewById(R.id.inputConfirmPassword)
-        btnRegister = findViewById(R.id.btnRegister)
+        alreadyHaveAccount = findViewById(R.id.toLoginActivity)
+        inputEmail = findViewById(R.id.inputEmailET)
+        inputFullName = findViewById(R.id.inputEmailET)
+        inputPassword = findViewById(R.id.inputPasswordET)
+        inputConfirmPassword = findViewById(R.id.inputConfirmPasswordET)
+        btnRegister = findViewById(R.id.btnRegisterLL)
         progressDialog = ProgressDialog(this)
     }
 
