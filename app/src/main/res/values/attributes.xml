@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="PostCard">
+        <attr name="postImage" format="reference" />
+        <attr name="postTitle" format="string" />
+        <attr name="postLocation" format="string" />
+    </declare-styleable>
+</resources>
