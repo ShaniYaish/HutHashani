@@ -1,19 +1,149 @@
 package com.idz.huthashani.recommendation
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
+import android.widget.ImageButton
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.idz.huthashani.R
+import com.idz.huthashani.dao.Post
+import com.idz.huthashani.utils.RequestStatus
 
 class RecommendationFragment: Fragment() {
 
+    private val newRecommendationViewModel: RecommendationViewModel by activityViewModels()
+
+    private lateinit var view: View
+    private lateinit var title: TextInputEditText
+    private lateinit var description: TextInputEditText
+    private lateinit var attachPictureButton: ImageButton
+    private lateinit var submitButton: MaterialButton
+    private lateinit var progressBar: ProgressBar
+    private lateinit var attachedPicture: Uri
+
+
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_recommendation, container, false)
+        inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        view = inflater.inflate(
+            R.layout.fragment_recommendation, container, false
+        )
+
+        initViews(view)
+        handleSubmitButton()
+        observeCreatePostStatus()
+        handleAttachPostPicture()
+
+        return view
+    }
+
+    private fun initViews(view: View) {
+        title = view.findViewById(R.id.post_title)
+        description = view.findViewById(R.id.post_description)
+        attachPictureButton = view.findViewById(R.id.post_attach_picture_button)
+        submitButton = view.findViewById(R.id.post_submit)
+        progressBar = view.findViewById(R.id.progress_bar_create_new_post)
+
+    }
+
+    private fun handleSubmitButton() {
+        submitButton.setOnClickListener {
+            createNewPost()
+        }
+    }
+
+    private fun createNewPost() {
+        val validationResponse = validateRecommendation(
+            title.text.toString(), description.text.toString(),
+            ::attachedPicture.isInitialized
+        )
+
+        if (validationResponse == null) {
+            val newRecommendation = Post(
+                title = title.text.toString(),
+                description = description.text.toString(),
+            )
+            newRecommendationViewModel.createNewPost(newRecommendation, attachedPicture)
+        }
+        else{
+            // Show the validation response as a toast message
+            Toast.makeText(requireContext(), validationResponse, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+        private val pickImageContract =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                uri?.let {
+                    attachedPicture = it
+                }
+            }
+
+        private fun handleAttachPostPicture() {
+            attachPictureButton.setOnClickListener {
+                pickImageContract.launch("image/*")
+            }
+        }
+
+
+
+    private fun observeCreatePostStatus() {
+        newRecommendationViewModel.requestStatus.observe(viewLifecycleOwner) { status: RequestStatus ->
+            when(status) {
+                //If the new status is RequestStatus.IN_PROGRESS, it hides certain UI elements,
+                // and shows a progress bar (progressBar) to indicate that a request is in progress.
+                RequestStatus.IN_PROGRESS ->{
+                    title.visibility = View.GONE
+                    description.visibility = View.GONE
+                    attachPictureButton.visibility = View.GONE
+                    submitButton.visibility = View.GONE
+                    progressBar.visibility = View.VISIBLE
+                }
+                RequestStatus.SUCCESS ->
+                    findNavController().popBackStack()
+
+                else -> {}
+            }
+        }
+    }
+
+    private fun validateRecommendation(title : String, description :String,pictureInitializeStatus: Boolean ): String? {
+        if (title.length > 30) {
+            return "כותרת צריכה להיות עד 30 תווים"
+        }
+        if (title.length < 6) {
+            return "כותרת צריכה להיות לפחות 6 תווים"
+        }
+        if (description.length < 6) {
+            return "תיאור צריך להיות לפחות 6 תווים"
+        }
+
+        if (description.length > 150) {
+            return "תיאור צריך להיות עד 150 תווים"
+        }
+
+        if (!pictureInitializeStatus)
+        {
+            return "אנא בחר תמונה"
+        }
+
+        return null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        newRecommendationViewModel.clear()
     }
 
 }
