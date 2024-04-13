@@ -1,3 +1,4 @@
+<!--
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -77,3 +78,151 @@ android:padding="20dp">
     android:visibility="gone"
     />
 </LinearLayout>
+-->
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#222222"
+                android:textSize="18sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="23dp"
+                android:text="פרסום המלצה חדשה"
+                />
+
+            <RelativeLayout
+                android:id="@+id/add_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="80dp"
+                android:layout_marginBottom="20dp"
+                android:background="#FFFFFF"
+                android:elevation="15dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/add_picture_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/up_picture" />
+
+                <TextView
+                    android:id="@+id/add_picture_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/add_picture_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:text="שחרר את התמונה שלך כאן או עיין"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/inputFullNameRest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cr20bffd3d3d3"
+                android:paddingVertical="14dp"
+                android:layout_marginBottom="11dp"
+                android:layout_marginHorizontal="35dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/inputFullNameRest_text"
+                    android:textColor="#36454F"
+                    android:textSize="18sp"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:text="שמה של המסעדה?"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/inputLocationRest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cr20bffd3d3d3"
+                android:paddingVertical="14dp"
+                android:layout_marginBottom="11dp"
+                android:layout_marginHorizontal="35dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/inputLocationRest_text"
+                    android:textColor="#36454F"
+                    android:textSize="18sp"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:text="היכן היא נמצאת?"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/inputOpinionRest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cr20bffd3d3d3"
+                android:paddingVertical="70dp"
+                android:layout_marginBottom="11dp"
+                android:layout_marginHorizontal="35dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rfxmwcopwr08"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:text="מה דעתך עליה?"
+                    android:textColor="#36454F"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/publish_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:background="@drawable/button"
+                android:paddingVertical="13dp"
+                android:layout_marginHorizontal="128dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/publish_button_text"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="פרסם"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+</LinearLayout>
+
