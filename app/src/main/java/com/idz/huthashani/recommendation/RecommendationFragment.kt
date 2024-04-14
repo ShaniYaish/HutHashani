@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.URLUtil
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,13 +28,14 @@ class RecommendationFragment: Fragment() {
     private val newRecommendationViewModel: RecommendationViewModel by activityViewModels()
 
     private lateinit var view: View
-    private lateinit var title: TextInputEditText
-    private lateinit var description: TextInputEditText
+    private lateinit var fullNameRest: EditText
+    private lateinit var locationRest: EditText
+    private lateinit var description: EditText
     private lateinit var attachPictureButton: ImageButton
-    private lateinit var submitButton: MaterialButton
+    private lateinit var submitButton: LinearLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var attachedPicture: Uri
-
+    private lateinit var resImage: ImageView
 
 
     override fun onCreateView(
@@ -50,10 +55,16 @@ class RecommendationFragment: Fragment() {
     }
 
     private fun initViews(view: View) {
-        title = view.findViewById(R.id.post_title)
-        description = view.findViewById(R.id.post_description)
+        val fullNameRestLL = view.findViewById<LinearLayout>(R.id.inputFullNameRest)
+        val locationLL = view.findViewById<LinearLayout>(R.id.inputLocationRest)
+        val desLL = view.findViewById<LinearLayout>(R.id.inputOpinionRest)
+
+        fullNameRest = fullNameRestLL.findViewById(R.id.inputFullNameRest_text)
+        locationRest = locationLL.findViewById(R.id.inputLocationRest_text)
+        description = desLL.findViewById(R.id.inputOpinionRest_text)
         attachPictureButton = view.findViewById(R.id.post_attach_picture_button)
-        submitButton = view.findViewById(R.id.post_submit)
+        resImage = view.findViewById(R.id.add_picture_image)
+        submitButton = view.findViewById(R.id.publish_button)
         progressBar = view.findViewById(R.id.progress_bar_create_new_post)
 
     }
@@ -66,13 +77,14 @@ class RecommendationFragment: Fragment() {
 
     private fun createNewPost() {
         val validationResponse = validateRecommendation(
-            title.text.toString(), description.text.toString(),
+            fullNameRest.text.toString(), description.text.toString(),
             ::attachedPicture.isInitialized
         )
 
         if (validationResponse == null) {
             val newRecommendation = Post(
-                title = title.text.toString(),
+                fullNameRest = fullNameRest.text.toString(),
+                locationRest = locationRest.text.toString(),
                 description = description.text.toString(),
             )
             newRecommendationViewModel.createNewPost(newRecommendation, attachedPicture)
@@ -87,6 +99,7 @@ class RecommendationFragment: Fragment() {
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 uri?.let {
                     attachedPicture = it
+                    resImage.setImageURI(it)
                 }
             }
 
@@ -104,7 +117,8 @@ class RecommendationFragment: Fragment() {
                 //If the new status is RequestStatus.IN_PROGRESS, it hides certain UI elements,
                 // and shows a progress bar (progressBar) to indicate that a request is in progress.
                 RequestStatus.IN_PROGRESS ->{
-                    title.visibility = View.GONE
+                    fullNameRest.visibility = View.GONE
+                    locationRest.visibility = View.GONE
                     description.visibility = View.GONE
                     attachPictureButton.visibility = View.GONE
                     submitButton.visibility = View.GONE
