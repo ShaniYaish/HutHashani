@@ -77,7 +77,7 @@ class RecommendationFragment: Fragment() {
 
     private fun createNewPost() {
         val validationResponse = validateRecommendation(
-            fullNameRest.text.toString(), description.text.toString(),
+            fullNameRest.text.toString(),locationRest.text.toString(), description.text.toString(),
             ::attachedPicture.isInitialized
         )
 
@@ -132,12 +132,15 @@ class RecommendationFragment: Fragment() {
         }
     }
 
-    private fun validateRecommendation(title : String, description :String,pictureInitializeStatus: Boolean ): String? {
-        if (title.length > 30) {
-            return "כותרת צריכה להיות עד 30 תווים"
+    private fun validateRecommendation(nameOfRest : String,location : String, description :String,pictureInitializeStatus: Boolean ): String? {
+        if (nameOfRest.length > 30) {
+            return "שם המסעדה צריך להיות עד 30 תווים"
         }
-        if (title.length < 6) {
-            return "כותרת צריכה להיות לפחות 6 תווים"
+        if (nameOfRest.isEmpty()) {
+            return "אנא הכנס את שם המסעדה"
+        }
+        if (location.isEmpty()) {
+            return "אנא הכנס היכן המסעדה נמצאת"
         }
         if (description.length < 6) {
             return "תיאור צריך להיות לפחות 6 תווים"

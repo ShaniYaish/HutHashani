@@ -11,8 +11,11 @@ data class Post(
     @PrimaryKey
     var id: String = "",
 
-    @ColumnInfo(name = "title")
-    var title: String = "",
+    @ColumnInfo(name = "fullNameRest")
+    var fullNameRest: String = "",
+
+    @ColumnInfo(name = "locationRest")
+    var locationRest: String = "",
 
     @ColumnInfo(name = "description")
     var description: String = "",
@@ -27,6 +30,6 @@ data class Post(
 
     ) {
     @Ignore
-    constructor() : this("", "", "", "", "")
+    constructor() : this("", "", "", "", "","")
 }
 

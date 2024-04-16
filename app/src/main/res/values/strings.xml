@@ -7,4 +7,7 @@
     <string name="recommendation_fragment_title">המלצה</string>
     <string name="user_profile_fragment_title">פרופיל</string>
 
+    <string name="users_profile_default_string">User\'s Profile</string>
+
+
 </resources>
