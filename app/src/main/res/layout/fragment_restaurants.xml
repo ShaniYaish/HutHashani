@@ -7,7 +7,8 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:paddingTop="24dp"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    android:background="@drawable/background">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

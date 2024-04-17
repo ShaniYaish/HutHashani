@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,11 +31,12 @@ import com.idz.huthashani.dao.Post
 import com.idz.huthashani.restaurants.PostAdapter
 import com.idz.huthashani.restaurants.RestaurantsViewModel
 import com.idz.huthashani.utils.RequestStatus
+import kotlinx.coroutines.*
 
 
 class ProfileFragment : Fragment() {
     private val restaurantsViewModel: RestaurantsViewModel by viewModels()
-    private lateinit var viewModel: ProfileViewModel
+    private lateinit var profileViewModel: ProfileViewModel
 
     private lateinit var fireBaseAuth: FirebaseAuth
     private lateinit var currentUser: FirebaseUser
@@ -48,6 +50,8 @@ class ProfileFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
 
+    private var currentUserName : String? = null
+
 
 
     override fun onCreateView(
@@ -60,14 +64,17 @@ class ProfileFragment : Fragment() {
             initializeViews(view)
         }
 
-        // Load user profile image if available
-        loadProfileImage()
         initUserName()
+        handleUpdateButton()
+        loadProfileImage()
+
         setupRecyclerView()
         setupPosts()
+
         observePostViewModel()
         observeRequestStatus()
-
+        observeChangeNameResult()
+        observeUploadProfileImageResult()
 
         return view
     }
@@ -76,7 +83,7 @@ class ProfileFragment : Fragment() {
         galleryButton = view.findViewById(R.id.edit_button)
         updateBtn = view.findViewById(R.id.update_button)
         profileImage = view.findViewById(R.id.profile_image)
-        fullName = view.findViewById(R.id.text)
+        fullName = view.findViewById(R.id.nameEditText)
         progressBar = view.findViewById(R.id.progress_bar)
         recyclerView = view.findViewById(R.id.posts_recycler_view)
 
@@ -85,7 +92,7 @@ class ProfileFragment : Fragment() {
         currentUser = fireBaseAuth.currentUser!!
 
         // Initialize ViewModel
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
     }
 
     private fun initUserName() {
@@ -97,9 +104,9 @@ class ProfileFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         // Retrieve the full name of the user from the Firestore document
-                        val name = document.getString("fullName")
+                        currentUserName = document.getString("fullName")
                         // Set the text of the EditText
-                        fullName.setText(" $name שלום , ")
+                        fullName.setText(currentUserName)
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -116,16 +123,7 @@ class ProfileFragment : Fragment() {
             openGallery()
         }
 
-        // Set onClickListener for the update button
-        updateBtn.setOnClickListener {
-            val name = fullName.text.toString()
-            val userProfile = UserProfile(name, currentUser.email ?: "", selectedImageUri.toString())
-            // Show progress bar
-            progressBar.visibility = View.VISIBLE
-            // Call ViewModel function to update profile
-            //viewModel.changeUserName(userProfile, name)
-            viewModel.uploadProfileImage(userProfile, selectedImageUri)
-        }
+
     }
 
 
@@ -165,6 +163,37 @@ class ProfileFragment : Fragment() {
         restaurantsViewModel.getPosts("", "")
     }
 
+    private fun handleUpdateButton(){
+        updateBtn.setOnClickListener {
+            val name = fullName.text.toString()
+            val userProfile = UserProfile(name, currentUser.email ?: "", selectedImageUri.toString())
+
+            // Show progress bar
+            progressBar.visibility = View.VISIBLE
+
+            // Start a coroutine to delay the execution
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(3000) // Delay for 3 seconds
+
+                // Call ViewModel function to update profile
+                if(selectedImageUri == null && currentUserName == name){
+                    Toast.makeText(requireContext(), "אין מה לעדכן", Toast.LENGTH_SHORT).show()
+                }else if (selectedImageUri == null &&  currentUserName != name){
+                    profileViewModel.changeUserName(userProfile, name)
+                }else if (selectedImageUri != null &&  currentUserName == name){
+                    profileViewModel.uploadProfileImage(userProfile, selectedImageUri)
+                    selectedImageUri = null
+                }else{
+                    profileViewModel.changeUserName(userProfile, name)
+                    profileViewModel.uploadProfileImage(userProfile, selectedImageUri)
+                }
+
+                // Hide progress bar after 3 seconds
+                progressBar.visibility = View.GONE
+            }
+        }
+    }
+
 
     private fun observePostViewModel() {
         restaurantsViewModel.posts.observe(viewLifecycleOwner) { posts: List<Post> ->
@@ -190,5 +219,54 @@ class ProfileFragment : Fragment() {
             }
         }
     }
+
+
+    private fun observeChangeNameResult() {
+        profileViewModel.changeNameResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                RequestStatus.SUCCESS -> {
+                    // Hide progress bar when profile image upload is successful
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "השם התעדכן בהצלחה", Toast.LENGTH_SHORT).show()
+                    initUserName()
+                }
+                RequestStatus.IN_PROGRESS -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                RequestStatus.FAILURE -> {
+                    // Handle failure case if profile image upload fails (optional)
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "מצטערים , לא הצלחנו לעדכן את שמך", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    // Handle other cases if needed (optional)
+                }
+            }
+        }
+    }
+
+    private fun observeUploadProfileImageResult() {
+        profileViewModel.uploadProfileImageResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                RequestStatus.SUCCESS -> {
+                    // Hide progress bar when profile image upload is successful
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "תמונת הפרופיל התעדכנה בהצלחה", Toast.LENGTH_SHORT).show()
+                }
+                RequestStatus.IN_PROGRESS -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                RequestStatus.FAILURE -> {
+                    // Handle failure case if profile image upload fails (optional)
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "מצטערים , לא הצלחנו לעדכן את תמונת הפרופיל שלך", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    // Handle other cases if needed (optional)
+                }
+            }
+        }
+    }
+
 }
 

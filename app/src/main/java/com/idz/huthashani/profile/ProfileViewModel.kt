@@ -1,6 +1,7 @@
 package com.idz.huthashani.profile
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,52 +10,48 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.idz.huthashani.utils.RequestStatus
 
 class ProfileViewModel : ViewModel() {
-    private val _uploadProfileImageResult = MutableLiveData<Boolean>()
-    private val _changeNameResult = MutableLiveData<Boolean>()
-    val uploadProfileImageResult: LiveData<Boolean> get() = _uploadProfileImageResult
-    val changeNameResult: LiveData<Boolean> get() = _changeNameResult
+    private val _uploadProfileImageResult = MutableLiveData<RequestStatus>()
+    private val _changeNameResult = MutableLiveData<RequestStatus>()
+    val uploadProfileImageResult: LiveData<RequestStatus> get() = _uploadProfileImageResult
+    val changeNameResult: LiveData<RequestStatus> get() = _changeNameResult
 
     private val storage = FirebaseStorage.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     fun uploadProfileImage(userProfile: UserProfile, imageUri: Uri?) {
-        if (imageUri == null) {
-            _uploadProfileImageResult.value = false
-            return
-        }
 
         val imageRef: StorageReference = storage.reference.child("profile_images/${userProfile.email}")
+        _uploadProfileImageResult.value = RequestStatus.IN_PROGRESS
 
-        imageRef.putFile(imageUri)
+        imageRef.putFile(imageUri!!)
             .addOnSuccessListener {
-                _uploadProfileImageResult.setValue(true)
+                _uploadProfileImageResult.value = RequestStatus.SUCCESS
             }
             .addOnFailureListener {
-                _uploadProfileImageResult.setValue(false)
+                _uploadProfileImageResult.value = RequestStatus.FAILURE
             }
     }
 
     fun changeUserName(userProfile: UserProfile, fullName: String) {
-        if (fullName.isEmpty()) {
-            _changeNameResult.value = false
-            return
-        }
 
-        val names = fullName.split(" ")
         val updatedUserProfile = hashMapOf<String, Any>(
             "fullName" to fullName
         )
 
+        _changeNameResult.value = RequestStatus.IN_PROGRESS
+
         db.collection("Users").document(currentUser!!.uid)
             .update(updatedUserProfile)
             .addOnSuccessListener {
-                _changeNameResult.value = true
+                _changeNameResult.value = RequestStatus.SUCCESS
             }
             .addOnFailureListener {
-                _changeNameResult.value = false
+                _changeNameResult.value = RequestStatus.FAILURE
             }
+
     }
 }
