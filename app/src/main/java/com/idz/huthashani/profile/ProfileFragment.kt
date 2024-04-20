@@ -76,6 +76,7 @@ class ProfileFragment : Fragment() {
         observeChangeNameResult()
         observeUploadProfileImageResult()
 
+
         return view
     }
 
@@ -98,6 +99,7 @@ class ProfileFragment : Fragment() {
     private fun initUserName() {
         val userId = currentUser.uid
         val usersRef = db.collection("Users")
+
 
         userId.let { uid ->
             usersRef.document(uid).get()
@@ -190,6 +192,7 @@ class ProfileFragment : Fragment() {
 
                 // Hide progress bar after 3 seconds
                 progressBar.visibility = View.GONE
+                onDestroyView()
             }
         }
     }
@@ -266,6 +269,13 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Clear the value of LiveData
+        profileViewModel.clearChanges()
+
     }
 
 }

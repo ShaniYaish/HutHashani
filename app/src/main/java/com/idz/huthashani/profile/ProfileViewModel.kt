@@ -54,4 +54,10 @@ class ProfileViewModel : ViewModel() {
             }
 
     }
+
+    fun clearChanges() {
+        _changeNameResult.value = RequestStatus.IDLE
+        _uploadProfileImageResult.value = RequestStatus.IDLE
+
+    }
 }
