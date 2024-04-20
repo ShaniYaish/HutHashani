@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.idz.huthashani.R
 import com.idz.huthashani.dao.Post
-import java.util.Locale
 
 class PostAdapter(private var posts: List<Post>?): RecyclerView.Adapter<PostViewHolder>() {
 
@@ -18,7 +17,7 @@ class PostAdapter(private var posts: List<Post>?): RecyclerView.Adapter<PostView
     //private var listener: OnPostClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.post_card, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.res_post_card, parent, false)
         return PostViewHolder(view)
     }
 
