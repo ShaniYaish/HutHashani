@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.idz.huthashani.R
 
-class resPageFragment : Fragment() {
+class ResPageFragment : Fragment() {
 
     companion object {
-        fun newInstance() = resPageFragment()
+        fun newInstance() = ResPageFragment()
     }
 
     private lateinit var viewModel: ResPageViewModel
