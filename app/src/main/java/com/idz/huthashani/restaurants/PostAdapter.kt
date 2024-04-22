@@ -1,5 +1,6 @@
 package com.idz.huthashani.restaurants
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,15 +8,15 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.idz.huthashani.R
 import com.idz.huthashani.dao.Post
 
-class PostAdapter(private var posts: List<Post>?): RecyclerView.Adapter<PostViewHolder>() {
+class PostAdapter(private var posts: List<Post>? , private val navController: NavController): RecyclerView.Adapter<PostViewHolder>() {
 
     private val storage = FirebaseStorage.getInstance()
-    private val userEmail = FirebaseAuth.getInstance().currentUser?.email as String
-    //private var listener: OnPostClickListener? = null
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.res_post_card, parent, false)
@@ -38,10 +39,29 @@ class PostAdapter(private var posts: List<Post>?): RecyclerView.Adapter<PostView
         holder.postCardLocation!!.text = post.locationRest
         holder.postCardTitle!!.text = post.fullNameRest
 
-        holder.postCardButton!!.setOnClickListener{
-            
+        holder.postCardButton!!.setOnClickListener {
+            // Create a Bundle to hold the data
+            val bundle = Bundle().apply {
+                putString("restaurantName", post.fullNameRest)
+                putString("restaurantLocation", post.locationRest)
+                putString("restaurantImage", post.picture)
+                putString("restaurantUserEmail", post.userEmail)
+                putString("restaurantRec", post.description)
+            }
+
+            // Navigate to ResPageFragment with the bundle
+            try {
+                navController.navigate(
+                    R.id.action_restaurantsFragment_to_resPageFragment,
+                    bundle
+                )
+            }catch (e: IllegalArgumentException){
+                navController.navigate(
+                    R.id.action_userProfileFragment_to_resPageFragment,
+                    bundle
+                )
+            }
         }
+
     }
-
-
 }

@@ -60,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun initializeViews() {
         alreadyHaveAccount = findViewById(R.id.toLoginActivity)
         inputEmail = findViewById(R.id.inputEmailET)
-        inputFullName = findViewById(R.id.inputEmailET)
+        inputFullName = findViewById(R.id.inputFullNameET)
         inputPassword = findViewById(R.id.inputPasswordET)
         inputConfirmPassword = findViewById(R.id.inputConfirmPasswordET)
         btnRegister = findViewById(R.id.btnRegisterLL)

@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.idz.huthashani.R
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
+import com.idz.huthashani.NavActivity
 import com.idz.huthashani.dao.Post
 import com.idz.huthashani.restaurants.PostAdapter
 import com.idz.huthashani.restaurants.RestaurantsViewModel
@@ -97,12 +98,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initUserName() {
-        val userId = currentUser.uid
+        val userEmail = currentUser.email
         val usersRef = db.collection("Users")
 
 
-        userId.let { uid ->
-            usersRef.document(uid).get()
+        userEmail.let { email ->
+            usersRef.document(email.toString()).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         // Retrieve the full name of the user from the Firestore document
@@ -199,13 +200,13 @@ class ProfileFragment : Fragment() {
 
 
     private fun observePostViewModel() {
+        val navController = (requireActivity() as NavActivity).navController!!
+
         restaurantsViewModel.posts.observe(viewLifecycleOwner) { posts: List<Post> ->
             // Filter posts to include only those created by the current user
             val currentUserPosts = posts.filter { it.userEmail == currentUser.email.toString() }
-            Log.i("NUMBER", currentUserPosts.size.toString())
-
             // Create and set up the adapter with the filtered list of posts
-            val postAdapter = PostAdapter(currentUserPosts)
+            val postAdapter = PostAdapter(currentUserPosts,navController)
             recyclerView.adapter = postAdapter
         }
     }

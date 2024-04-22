@@ -1,6 +1,7 @@
 package com.idz.huthashani.firebase
 
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -34,13 +35,15 @@ class FirebaseModel {
     }
 
     fun registerUser(userLogin: UserLogin, userRegister: UserRegister, listener: (Task<AuthResult?>) -> Unit) {
+        Log.i("Tag2" , userRegister.fullName.toString())
+
         firebaseAuth.createUserWithEmailAndPassword(userLogin.email.toString(), userLogin.password.toString())
             .addOnCompleteListener { registrationTask ->
                 if (registrationTask.isSuccessful) {
                     val userId = firebaseAuth.currentUser!!.uid
                     val user = returnUserAsMap(userId,userRegister)
 
-                    db.collection("Users").document(userId)
+                    db.collection("Users").document(userLogin.email.toString())
                         .set(user)
                         .addOnSuccessListener {
                             _registerResult.value = "Success"
@@ -62,6 +65,7 @@ class FirebaseModel {
         val user = HashMap<String, Any>()
         user["fullName"] = userRegister.fullName ?: ""
         user["userId"] = userId
+        Log.i("Tag" , user["fullName"].toString())
         return user
     }
 

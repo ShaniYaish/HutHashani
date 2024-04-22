@@ -72,19 +72,27 @@ class RestaurantsFragment: Fragment() {
     }
 
     private fun observePostViewModel() {
-        restaurantsViewModel.posts.observe(viewLifecycleOwner) { posts: List<Post> ->
-            var displayedPost: List<Post> = posts;
-            val query = searchInput.text.toString()
-            if(query.isNotEmpty()) {
-                displayedPost = posts.filter { post ->
-                    post.locationRest.contains(query, ignoreCase = true)
-                }
-            }
+        val navController = (requireActivity() as NavActivity).navController
 
-            val postAdapter = PostAdapter(displayedPost)
-            recyclerView.adapter = postAdapter
+        if (navController != null) {
+            restaurantsViewModel.posts.observe(viewLifecycleOwner) { posts: List<Post> ->
+                var displayedPost: List<Post> = posts
+                val query = searchInput.text.toString()
+
+                if (query.isNotEmpty()) {
+                    displayedPost = posts.filter { post ->
+                        post.locationRest.contains(query, ignoreCase = true)
+                    }
+                }
+
+                val postAdapter = PostAdapter(displayedPost, navController) // Now navController is non-null
+                recyclerView.adapter = postAdapter
+            }
+        } else {
+            Log.e("RestaurantsFragment", "NavController is null. Cannot set up PostAdapter.")
         }
     }
+
 
     private fun observeRequestStatus() {
         restaurantsViewModel.requestStatus.observe(viewLifecycleOwner) { result ->
@@ -96,26 +104,27 @@ class RestaurantsFragment: Fragment() {
     }
 
     private fun observeSearchPost() {
+        val navController = (requireActivity() as NavActivity).navController
         searchInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
-                restaurantsViewModel.posts.observe(viewLifecycleOwner) { posts: List<Post> ->
-                    var displayedPost: List<Post> = posts;
-                    val query = editable.toString()
-                    if(query != null && query != "") {
-                        displayedPost = posts.filter { post ->
-                            post.locationRest.contains(query, ignoreCase = true)
-                        }
+                val query = editable?.toString() ?: ""
+                restaurantsViewModel.posts.value?.let { posts ->
+                    val filteredPosts = if (query.isNotEmpty()) {
+                        posts.filter { it.locationRest.contains(query, ignoreCase = true) }
+                    } else {
+                        posts
                     }
 
-                    val postAdapter = PostAdapter(displayedPost)
+                    val postAdapter = PostAdapter(filteredPosts, navController!!)
                     recyclerView.adapter = postAdapter
                 }
             }
+
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        });
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
+
 
 
 }

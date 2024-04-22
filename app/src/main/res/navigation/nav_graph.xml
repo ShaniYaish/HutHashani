@@ -10,6 +10,9 @@
         android:name="com.idz.huthashani.profile.ProfileFragment"
         android:label="My profile"
         tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_userProfileFragment_to_resPageFragment"
+            app:destination="@id/resPageFragment" />
     </fragment>
 
 
@@ -33,16 +36,21 @@
     <fragment
     android:id="@+id/restaurantsFragment"
     android:name="com.idz.huthashani.restaurants.RestaurantsFragment"
-    android:label="RestaurantsFragment">
-
-    <!-- Action to Recommendation Fragment -->
-    <action
-        android:id="@+id/action_restaurantsFragment_to_recommendationFragment"
-        app:destination="@id/recommendationFragment" />
+    android:label="RestaurantsFragment"
+        tools:layout="@layout/fragment_restaurants">
+        <action
+            android:id="@+id/action_restaurantsFragment_to_resPageFragment"
+            app:destination="@id/resPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/recommendationFragment"
         android:name="com.idz.huthashani.recommendation.RecommendationFragment"
-        android:label="RecommendationFragment" />
+        android:label="RecommendationFragment"
+        tools:layout="@layout/fragment_recommendation"/>
+    <fragment
+        android:id="@+id/resPageFragment"
+        android:name="com.idz.huthashani.respage.ResPageFragment"
+        android:label="ResPageFragment"
+        tools:layout="@layout/fragment_res_page"/>
 
 </navigation>

@@ -44,7 +44,7 @@ class ProfileViewModel : ViewModel() {
 
         _changeNameResult.value = RequestStatus.IN_PROGRESS
 
-        db.collection("Users").document(currentUser!!.uid)
+        db.collection("Users").document(currentUser!!.email.toString())
             .update(updatedUserProfile)
             .addOnSuccessListener {
                 _changeNameResult.value = RequestStatus.SUCCESS
