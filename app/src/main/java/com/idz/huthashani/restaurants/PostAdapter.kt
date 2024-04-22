@@ -3,6 +3,7 @@ package com.idz.huthashani.restaurants
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +37,11 @@ class PostAdapter(private var posts: List<Post>?): RecyclerView.Adapter<PostView
 
         holder.postCardLocation!!.text = post.locationRest
         holder.postCardTitle!!.text = post.fullNameRest
+
+        holder.postCardButton!!.setOnClickListener{
+            
+        }
     }
+
 
 }

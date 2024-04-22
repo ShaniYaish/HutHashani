@@ -14,7 +14,7 @@ import com.idz.huthashani.firebase.FirebaseModel
 import com.idz.huthashani.login.LoginActivity
 
 class NavActivity : AppCompatActivity() {
-    private var navController: NavController? = null
+    var navController: NavController? = null
     private val firebaseModel: FirebaseModel = FirebaseModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

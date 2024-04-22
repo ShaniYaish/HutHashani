@@ -10,11 +10,7 @@ import com.idz.huthashani.R
 
 class ResPageFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ResPageFragment()
-    }
 
-    private lateinit var viewModel: ResPageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,10 +19,5 @@ class ResPageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_res_page, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ResPageViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }

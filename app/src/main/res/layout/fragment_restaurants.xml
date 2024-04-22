@@ -18,7 +18,7 @@
             android:id="@+id/outlinedTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="search"
+            android:hint="חיפוש"
             android:layout_marginBottom="10dp"
             app:boxCornerRadiusBottomEnd="50dp"
             app:boxCornerRadiusBottomStart="50dp"

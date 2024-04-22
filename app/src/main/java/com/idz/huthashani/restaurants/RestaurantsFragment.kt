@@ -14,10 +14,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.util.query
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.idz.huthashani.MainActivity
+import com.idz.huthashani.NavActivity
 import com.idz.huthashani.R
 import com.idz.huthashani.dao.Post
 import com.idz.huthashani.profile.UserProfile
@@ -35,6 +37,7 @@ class RestaurantsFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view: View?= inflater.inflate(R.layout.fragment_restaurants, container, false)
+        val navController = (requireActivity() as NavActivity).navController
         if (view != null) {
             initViews(view)
         }
@@ -42,6 +45,7 @@ class RestaurantsFragment: Fragment() {
         setupSwipeRefresh()
         observePostViewModel()
         observeRequestStatus()
+        observeSearchPost()
 
         restaurantsViewModel.getPosts("", "")
 
@@ -90,5 +94,28 @@ class RestaurantsFragment: Fragment() {
             }
         }
     }
+
+    private fun observeSearchPost() {
+        searchInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+                restaurantsViewModel.posts.observe(viewLifecycleOwner) { posts: List<Post> ->
+                    var displayedPost: List<Post> = posts;
+                    val query = editable.toString()
+                    if(query != null && query != "") {
+                        displayedPost = posts.filter { post ->
+                            post.locationRest.contains(query, ignoreCase = true)
+                        }
+                    }
+
+                    val postAdapter = PostAdapter(displayedPost)
+                    recyclerView.adapter = postAdapter
+                }
+            }
+            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        });
+    }
+
 
 }

@@ -1,69 +1,68 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/postCardContainer"
     android:layout_width="154dp"
-    android:layout_height="192dp"
-    android:background="@drawable/post_card_container"
-    android:paddingVertical="8dp"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="18dp"
-    android:orientation="vertical"
-    android:gravity="center_vertical"
+    android:layout_marginStart="20dp"
     android:layout_marginTop="20dp"
-    android:layout_marginStart="20dp">
+    android:background="@drawable/post_card_container"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
 
     <ImageView
         android:id="@+id/postCardImageView"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="15dp"
-        android:src="@drawable/no_image"
-        android:scaleType="fitXY" />
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/no_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/postCardTitleTextView"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:layout_marginBottom="13dp"
-            android:layout_marginHorizontal="41dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="שם המסעדה" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="41dp"
+            android:layout_marginBottom="13dp"
+            android:text="שם המסעדה"
+            android:textColor="#000000"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/postCardLocationTextView"
-            android:textColor="#36454F"
-            android:textSize="12sp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="22dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="כתובת" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginBottom="10dp"
+            android:text="כתובת"
+            android:textColor="#36454F"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/postCardButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:background="@drawable/post_card_button"
-        android:paddingVertical="11dp"
+        android:layout_height="35dp"
         android:layout_marginHorizontal="25dp"
-        android:orientation="vertical">
+        android:background="@drawable/post_card_button"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingVertical="11dp">
 
         <TextView
             android:id="@+id/postCardButtonTextView"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="להמלצה" />
+            android:layout_height="wrap_content"
+            android:text="להמלצה"
+            android:textColor="#000000"
+            android:textSize="10sp" />
     </LinearLayout>
 
 </LinearLayout>
