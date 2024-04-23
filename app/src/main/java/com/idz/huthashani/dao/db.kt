@@ -8,5 +8,5 @@ fun getLocalDatabase(context: Context): AppLocalDataBase {
         context.applicationContext,
         AppLocalDataBase::class.java,
         "huthashaniDatabase"
-    ).allowMainThreadQueries().build()
+    ).fallbackToDestructiveMigration().build()
 }

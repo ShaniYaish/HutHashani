@@ -51,6 +51,13 @@
         android:id="@+id/resPageFragment"
         android:name="com.idz.huthashani.respage.ResPageFragment"
         android:label="ResPageFragment"
-        tools:layout="@layout/fragment_res_page"/>
+        tools:layout="@layout/fragment_res_page">
+        <action
+            android:id="@+id/action_resPageFragment_to_restaurantsFragment"
+            app:destination="@id/restaurantsFragment" />
+        <action
+            android:id="@+id/action_resPageFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
 
 </navigation>

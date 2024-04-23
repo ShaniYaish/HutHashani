@@ -42,6 +42,7 @@ class PostAdapter(private var posts: List<Post>? , private val navController: Na
         holder.postCardButton!!.setOnClickListener {
             // Create a Bundle to hold the data
             val bundle = Bundle().apply {
+                putString("restaurantId" , post.id)
                 putString("restaurantName", post.fullNameRest)
                 putString("restaurantLocation", post.locationRest)
                 putString("restaurantImage", post.picture)

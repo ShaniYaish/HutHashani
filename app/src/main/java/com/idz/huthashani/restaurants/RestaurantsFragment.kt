@@ -37,7 +37,6 @@ class RestaurantsFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view: View?= inflater.inflate(R.layout.fragment_restaurants, container, false)
-        val navController = (requireActivity() as NavActivity).navController
         if (view != null) {
             initViews(view)
         }

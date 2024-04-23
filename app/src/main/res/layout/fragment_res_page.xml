@@ -16,10 +16,40 @@
         android:paddingTop="20dp"
         app:layout_constraintTop_toTopOf="parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+
+            <!-- Delete button aligned to the left -->
+            <Button
+                android:id="@+id/delete_post_button"
+                android:layout_width="44dp"
+                android:layout_height="35dp"
+                android:background="@android:drawable/ic_menu_delete"
+                android:visibility="gone" />
+
+            <!-- Spacer to push edit button to the right -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <!-- Edit button aligned to the right -->
+            <Button
+                android:id="@+id/edit_post_button"
+                android:layout_width="44dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:drawable/ic_menu_edit"
+                android:visibility="gone" />  <!-- Icon for edit -->
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="250dp"
