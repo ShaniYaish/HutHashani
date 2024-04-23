@@ -80,7 +80,7 @@
                 android:paddingTop="24dp"
                 android:paddingBottom="40dp">
 
-                <TextView
+                <EditText
                     android:id="@+id/res_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                     android:textColor="#000000"
                     android:textSize="24sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/res_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <EditText
                             android:id="@+id/res_rec_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -133,10 +133,17 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/save_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="שמור שינויים" />

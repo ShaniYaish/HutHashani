@@ -39,9 +39,6 @@ class ResPageFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var fireBaseAuth: FirebaseAuth
     private val storage = FirebaseStorage.getInstance()
-    private val currentUser = FirebaseAuth.getInstance().currentUser
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +71,7 @@ class ResPageFragment : Fragment() {
             val navController = (requireActivity() as NavActivity).navController!!
 
             val bundle = Bundle().apply {
-                putString("restaurantId", postId)
+                putString("postId", postId)
                 putString("restaurantName", resNameTextView.text.toString())
                 putString("restaurantLocation", resLocationTextView.text.toString())
                 putString("restaurantImage", restaurantImage)
@@ -156,9 +153,5 @@ class ResPageFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun observesEditPost(){
-
     }
 }
