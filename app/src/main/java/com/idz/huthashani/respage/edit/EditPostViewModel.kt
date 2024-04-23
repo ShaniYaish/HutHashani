@@ -22,8 +22,6 @@ class EditPostViewModel : ViewModel() {
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     fun editPost(postId : String , resName : String , resLocation : String , resDes : String , resImg : Uri?) {
-        Log.i("EditPostFragment", "Editing post with ID: $postId")
-
         val updates = mutableMapOf<String, Any>(
             "fullNameRest" to resName,
             "locationRest" to resLocation,
@@ -38,10 +36,6 @@ class EditPostViewModel : ViewModel() {
             .addOnFailureListener {
                 _changeResult.value = RequestStatus.FAILURE
             }
-    }
-
-    fun clearChanges() {
-        _changeResult.value = RequestStatus.IDLE
     }
 
 }

@@ -13,14 +13,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.idz.huthashani.NavActivity
 import com.idz.huthashani.R
-import com.idz.huthashani.profile.ProfileViewModel
 import com.idz.huthashani.utils.RequestStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +27,7 @@ import kotlinx.coroutines.launch
 
 class EditPostFragment : Fragment() {
 
-    private lateinit var editPostViewModel: EditPostViewModel
+    private lateinit var editViewModel : EditPostViewModel
 
     private lateinit var postId: String
     private var selectedImageUri: Uri? = null
@@ -69,7 +67,7 @@ class EditPostFragment : Fragment() {
         progressBar=view.findViewById(R.id.progress_bar)
 
         // Initialize ViewModel
-        editPostViewModel = ViewModelProvider(this)[EditPostViewModel::class.java]
+        editViewModel = ViewModelProvider(this).get(EditPostViewModel::class.java)
     }
 
     private fun initArguments() {
@@ -120,7 +118,7 @@ class EditPostFragment : Fragment() {
                 saveChanges()
                 // Hide progress bar after 3 seconds
                 progressBar.visibility = View.GONE
-                onDestroyView()
+                //onDestroyView()
             }
         }
     }
@@ -130,20 +128,16 @@ class EditPostFragment : Fragment() {
         val newResLocation = resLocation.text.toString()
         val newResDescription = resDescription.text.toString()
 
-        editPostViewModel.editPost(postId , newResName , newResLocation , newResDescription , selectedImageUri)
+        editViewModel.editPost(postId , newResName , newResLocation , newResDescription , selectedImageUri)
     }
 
     private fun observeChangeResult() {
-        editPostViewModel.changeResult.observe(viewLifecycleOwner) { result ->
+        editViewModel.changeResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 RequestStatus.SUCCESS -> {
                     // Hide progress bar when profile image upload is successful
                     progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "השינויים נשמרו בהצלחה", Toast.LENGTH_SHORT).show()
-
-                }
-                RequestStatus.IN_PROGRESS -> {
-                    progressBar.visibility = View.VISIBLE
                 }
                 RequestStatus.FAILURE -> {
                     // Handle failure case if profile image upload fails (optional)
@@ -157,10 +151,4 @@ class EditPostFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // Clear the value of LiveData
-        editPostViewModel.clearChanges()
-
-    }
 }
