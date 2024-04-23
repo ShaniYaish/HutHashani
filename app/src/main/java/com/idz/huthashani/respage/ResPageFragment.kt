@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.idz.huthashani.NavActivity
 import com.idz.huthashani.R
+import com.idz.huthashani.profile.ProfileViewModel
 import com.idz.huthashani.restaurants.RestaurantsViewModel
 import com.idz.huthashani.utils.RequestStatus
 
@@ -65,6 +66,26 @@ class ResPageFragment : Fragment() {
             postId?.let {
                 restaurantsViewModel.deletePost(it) // Using the postId safely
             }
+        }
+
+        editButton.setOnClickListener {
+            val postId = arguments?.getString("restaurantId")
+            val restaurantImage = arguments?.getString("restaurantImage")
+            val navController = (requireActivity() as NavActivity).navController!!
+
+            val bundle = Bundle().apply {
+                putString("restaurantId", postId)
+                putString("restaurantName", resNameTextView.text.toString())
+                putString("restaurantLocation", resLocationTextView.text.toString())
+                putString("restaurantImage", restaurantImage)
+                putString("restaurantRec", resRecTextView.text.toString())
+            }
+
+            // Navigate to ResPageFragment with the bundle
+            navController.navigate(
+                R.id.action_resPageFragment_to_editPostFragment,
+                bundle
+            )
         }
     }
 
@@ -135,5 +156,9 @@ class ResPageFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun observesEditPost(){
+
     }
 }
