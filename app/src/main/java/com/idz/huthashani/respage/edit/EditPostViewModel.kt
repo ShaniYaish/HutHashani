@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.idz.huthashani.profile.UserProfile
 import com.idz.huthashani.utils.RequestStatus
 
@@ -22,11 +23,26 @@ class EditPostViewModel : ViewModel() {
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     fun editPost(postId : String , resName : String , resLocation : String , resDes : String , resImg : Uri?) {
-        val updates = mutableMapOf<String, Any>(
+        var updates = mutableMapOf<String, Any>(
             "fullNameRest" to resName,
             "locationRest" to resLocation,
             "description" to resDes
         )
+
+        if (resImg != null){
+            val userId = currentUser!!.uid
+            val imageRefLocation = "post_images/${userId}/${resImg.lastPathSegment}"
+            val imageRef: StorageReference = storage.reference.child(imageRefLocation)
+
+
+            imageRef.putFile(resImg)
+            updates = mutableMapOf<String, Any>(
+                "fullNameRest" to resName,
+                "locationRest" to resLocation,
+                "description" to resDes,
+                "picture" to imageRef.path
+            )
+        }
 
         db.collection("Posts").document(postId)
             .update(updates)

@@ -142,11 +142,28 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <Button
+            <LinearLayout
                 android:id="@+id/save_button"
-                android:layout_width="match_parent"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:text="שמור שינויים" />
+                android:layout_marginHorizontal="128dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/button"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="13dp">
+
+                <TextView
+                    android:id="@+id/update_button_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="שמור שינויים"
+                    android:textColor="#000000"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

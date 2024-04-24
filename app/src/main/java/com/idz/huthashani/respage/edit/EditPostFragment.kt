@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,7 +37,7 @@ class EditPostFragment : Fragment() {
     private lateinit var resDescription: EditText
     private lateinit var resPhoto: ImageView
     private lateinit var galleryButton: ImageView
-    private lateinit var saveButton: Button
+    private lateinit var saveButton: LinearLayout
     private lateinit var progressBar : ProgressBar
 
     private val storage = FirebaseStorage.getInstance()
@@ -118,7 +119,6 @@ class EditPostFragment : Fragment() {
                 saveChanges()
                 // Hide progress bar after 3 seconds
                 progressBar.visibility = View.GONE
-                //onDestroyView()
             }
         }
     }
@@ -138,6 +138,7 @@ class EditPostFragment : Fragment() {
                     // Hide progress bar when profile image upload is successful
                     progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "השינויים נשמרו בהצלחה", Toast.LENGTH_SHORT).show()
+                    navigate()
                 }
                 RequestStatus.FAILURE -> {
                     // Handle failure case if profile image upload fails (optional)
@@ -151,4 +152,8 @@ class EditPostFragment : Fragment() {
         }
     }
 
+    private fun navigate(){
+        val navController = (requireActivity() as NavActivity).navController
+        navController!!.navigate(R.id.action_editPostFragment_to_restaurantsFragment2)
+    }
 }

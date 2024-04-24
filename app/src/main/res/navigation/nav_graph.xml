@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.idz.huthashani.profile.ProfileFragment"
-        android:label="My profile"
+        android:label="הפרופיל שלי"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_userProfileFragment_to_resPageFragment"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.idz.huthashani.home.HomeFragment"
-        android:label="Home"
+        android:label="עמוד הבית"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_userProfileFragment"
@@ -36,7 +36,7 @@
     <fragment
     android:id="@+id/restaurantsFragment"
     android:name="com.idz.huthashani.restaurants.RestaurantsFragment"
-    android:label="RestaurantsFragment"
+    android:label="מסעדות כשרות"
         tools:layout="@layout/fragment_restaurants">
         <action
             android:id="@+id/action_restaurantsFragment_to_resPageFragment"
@@ -45,12 +45,12 @@
     <fragment
         android:id="@+id/recommendationFragment"
         android:name="com.idz.huthashani.recommendation.RecommendationFragment"
-        android:label="RecommendationFragment"
+        android:label=""
         tools:layout="@layout/fragment_recommendation"/>
     <fragment
         android:id="@+id/resPageFragment"
         android:name="com.idz.huthashani.respage.ResPageFragment"
-        android:label="ResPageFragment"
+        android:label=""
         tools:layout="@layout/fragment_res_page">
         <action
             android:id="@+id/action_resPageFragment_to_restaurantsFragment"
@@ -65,7 +65,11 @@
     <fragment
         android:id="@+id/editPostFragment"
         android:name="com.idz.huthashani.respage.edit.EditPostFragment"
-        android:label="EditPostFragment"
-        tools:layout="@layout/fragment_edit_post"/>
+        android:label=""
+        tools:layout="@layout/fragment_edit_post">
+        <action
+            android:id="@+id/action_editPostFragment_to_restaurantsFragment2"
+            app:destination="@id/restaurantsFragment" />
+    </fragment>
 
 </navigation>
