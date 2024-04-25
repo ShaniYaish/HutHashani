@@ -75,16 +75,16 @@ class RegisterActivity : AppCompatActivity() {
         val confirmPassword: String = inputConfirmPassword?.text.toString()
 
         if (!email.matches(emailPattern.toRegex())) {
-            inputEmail?.error = "Enter correct email"
+            inputEmail?.error = "אנא הכנס אימייל תקין"
             inputEmail?.requestFocus()
         }else if (fullName.isEmpty()) {
-            inputFullName!!.error = "Enter full name"
+            inputFullName!!.error = "אנא הכנס שם מלא"
             inputFullName!!.requestFocus()
         } else if (password.isEmpty() || password.length < 6) {
-            inputPassword?.error = "Password need more than 6 digits"
+            inputPassword?.error = "סיסמא צריכה להיות לפחות 6 תווים"
             inputPassword?.requestFocus()
         } else if (password != confirmPassword) {
-            inputConfirmPassword?.error = "Password not match"
+            inputConfirmPassword?.error = "הסיסמאות אינן תואמות"
             inputConfirmPassword?.requestFocus()
         } else {
             showProgressDialogWithDelay()
@@ -98,7 +98,7 @@ class RegisterActivity : AppCompatActivity() {
                 // Registration successful
                 sendUserToNextActivity()
                 progressDialog?.dismiss()
-                Toast.makeText(this@RegisterActivity, "Registration Successful", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@RegisterActivity, "נרשמת בהצלחה!", Toast.LENGTH_SHORT).show()
             } else {
                 // Registration failed
                 progressDialog?.dismiss()
@@ -115,7 +115,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun showProgressDialogWithDelay() {
-        progressDialog?.setMessage("Please wait while registration...")
+        progressDialog?.setMessage("אנא המתן ...")
         progressDialog?.show()
         progressDialogDelayHandler.postDelayed(progressDialogDelayRunnable, delayDuration)
     }

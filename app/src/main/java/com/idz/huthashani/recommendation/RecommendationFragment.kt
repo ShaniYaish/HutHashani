@@ -125,8 +125,7 @@ class RecommendationFragment: Fragment() {
                     progressBar.visibility = View.VISIBLE
                 }
                 RequestStatus.SUCCESS ->
-                    findNavController().popBackStack()
-
+                    findNavController().navigate(R.id.action_recommendationFragment_to_restaurantsFragment)
                 else -> {}
             }
         }

@@ -118,7 +118,7 @@
                 android:layout_marginBottom="11dp"
                 android:background="@drawable/cr20bffd3d3d3"
                 android:orientation="vertical"
-                android:paddingVertical="70dp">
+                android:paddingVertical="10dp">
 
                 <EditText
                     android:id="@+id/inputOpinionRest_text"
@@ -130,7 +130,10 @@
                     android:hint="מה דעתך עליה?"
                     android:paddingBottom="5dp"
                     android:textColor="#36454F"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
+                    android:padding="10dp"/>
             </LinearLayout>
 
             <LinearLayout

@@ -49,12 +49,12 @@ class FirebaseModel {
                             _registerResult.value = "Success"
                         }
                         .addOnFailureListener {
-                            _registerResult.value = "Cannot create user"
+                            _registerResult.value = "יצירת חשבון נכשלה"
                         }
                     listener(registrationTask)
                 } else {
                     // Notify listener of failure if user registration failed
-                    _registerResult.value = "The email is already in use"
+                    _registerResult.value = "האימייל כבר בשימוש"
                     listener(registrationTask)
                 }
             }

@@ -63,10 +63,10 @@ class LoginActivity : AppCompatActivity() {
         val email: String = inputEmail?.text.toString()
         val password: String = inputPassword?.text.toString()
         if (!email.matches(emailPattern.toRegex())) {
-            inputEmail?.error = "Enter correct email"
+            inputEmail?.error = "אנא הכנס אימייל תקין"
             inputEmail?.requestFocus()
         } else if (password.isEmpty() || password.length < 6) {
-            inputPassword?.error = "Enter proper password"
+            inputPassword?.error = "סיסמא לא תקינה"
             inputPassword?.requestFocus()
         } else {
             showProgressDialogWithDelay()
@@ -79,10 +79,10 @@ class LoginActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 sendUserToNextActivity()
                 progressDialog?.dismiss()
-                Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "התחברת בהצלחה!", Toast.LENGTH_SHORT).show()
             } else {
                 progressDialog?.dismiss()
-                Toast.makeText(this@LoginActivity, "Invalid username and password", Toast.LENGTH_SHORT)
+                Toast.makeText(this@LoginActivity, "אימייל או סיסמא לא נכונים", Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showProgressDialogWithDelay() {
-        progressDialog?.setMessage("Please wait while registration...")
+        progressDialog?.setMessage("אנא המתן ...")
         progressDialog?.show()
         progressDialogDelayHandler.postDelayed(progressDialogDelayRunnable, delayDuration)
     }
