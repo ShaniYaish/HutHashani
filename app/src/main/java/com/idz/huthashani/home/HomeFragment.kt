@@ -6,13 +6,21 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.idz.huthashani.R
+import org.jsoup.Jsoup
+import kotlinx.coroutines.*
 
 
 class HomeFragment : Fragment() {
+
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var shabbatTimesTextView: TextView
+
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: WishCardAdapter
@@ -24,7 +32,13 @@ class HomeFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_home, container, false)
 
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        shabbatTimesTextView = rootView.findViewById(R.id.shabbat_times)
 
+        // Fetch Shabbat times
+        fetchShabbatTimes("Tel-Aviv") { result ->
+            shabbatTimesTextView.text = result
+        }
 
         val data = generateDummyData()
         val imageResources = generateImageList()
@@ -58,6 +72,37 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
 
         return rootView
+    }
+
+
+    private fun fetchShabbatTimes(city: String, onResult: (String) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = "https://www.maariv.co.il/jewishism/shabat-times/$city"
+                val document = Jsoup.connect(url).get()
+
+                // Get the Shabbat entry time
+                val entryTime = document.select("span.Details-city-shabbat-light-candle").first()?.ownText()
+
+                // Get the Shabbat exit time
+                val exitTime = document.select("span.Details-city-shabbat-ends").first()?.ownText()
+
+                // Construct the result message
+                val result = if (entryTime != null && exitTime != null) {
+                    "כניסה: $entryTime, יציאה: $exitTime"
+                } else {
+                    "Could not retrieve Shabbat times"
+                }
+
+                withContext(Dispatchers.Main) {
+                    onResult(result)
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onResult("Failed to fetch Shabbat times")
+                }
+            }
+        }
     }
 
 
