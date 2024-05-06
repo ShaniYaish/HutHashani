@@ -70,10 +70,6 @@
         android:id="@+id/editPostFragment"
         android:name="com.idz.huthashani.respage.edit.EditPostFragment"
         android:label=""
-        tools:layout="@layout/fragment_edit_post">
-        <action
-            android:id="@+id/action_editPostFragment_to_restaurantsFragment2"
-            app:destination="@id/restaurantsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_edit_post"/>
 
 </navigation>

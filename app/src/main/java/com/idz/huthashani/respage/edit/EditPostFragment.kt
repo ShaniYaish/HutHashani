@@ -154,6 +154,9 @@ class EditPostFragment : Fragment() {
 
     private fun navigate(){
         val navController = (requireActivity() as NavActivity).navController
-        navController!!.navigate(R.id.action_editPostFragment_to_restaurantsFragment2)
+        val startDestinationId = navController?.graph?.startDestinationId
+        if (startDestinationId != null) {
+            navController.popBackStack(startDestinationId, false)  // Pop back to the start of the navigation graph
+        }
     }
 }
