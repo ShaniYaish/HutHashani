@@ -28,9 +28,6 @@
         <action
             android:id="@+id/action_homeFragment_to_restaurantsFragment2"
             app:destination="@id/restaurantsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_recommendationFragment"
-            app:destination="@id/recommendationFragment" />
     </fragment>
 
     <fragment

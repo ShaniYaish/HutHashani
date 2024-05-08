@@ -139,9 +139,10 @@ class ResPageFragment : Fragment() {
             when (result) {
                 RequestStatus.SUCCESS -> {
                     val navController = (requireActivity() as NavActivity).navController
-                    navController!!.navigate(
-                        R.id.action_resPageFragment_to_restaurantsFragment
-                    )
+                    val startDestinationId = navController?.graph?.startDestinationId
+                    if (startDestinationId != null) {
+                        navController.popBackStack(startDestinationId, false)  // Pop back to the start of the navigation graph
+                    }
                     Toast.makeText(requireContext(), "הפוסט נמחק בהצלחה", Toast.LENGTH_SHORT).show()
                 }
                 RequestStatus.FAILURE -> {
